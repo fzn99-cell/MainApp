@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      PurpleWeather
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">PurpleWeather</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" class="custom-bg">
+    <strong class="custom-heading">Welcome to PurpleWeather!</strong>
+    <p class="custom-text">Your stylish companion for accurate weather forecasts</p>
+    <ion-button routerLink="/weather" expand="block" fill="solid" color="light" shape="round" class="start-button">
+      <ion-icon name="cloud-outline" slot="start"></ion-icon>
+      Check Weather
+    </ion-button>
+  </div>
+</ion-content>

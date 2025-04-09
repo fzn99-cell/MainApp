@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true">
+  <ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+      <ion-title>PurpleWeather</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-item class="search-bar">
+      <ion-input 
+        [(ngModel)]="city" 
+        placeholder="Search for a city..."
+        (keyup.enter)="getWeatherData()">
+      </ion-input>
+      <ion-icon 
+        name="search-outline" 
+        slot="end" 
+        (click)="getWeatherData()" 
+        class="search-icon">
+      </ion-icon>
+    </ion-item>
+
+    <ion-card *ngIf="weatherData" class="weather-card">
+      <ion-card-header>
+        <div class="location-header">
+          <img [src]="flagUrl" alt="Country Flag" class="flag-icon">
+          <div class="city-info">
+            <h2>{{ city | titlecase }}</h2>
+            <div class="weather-status">
+              <img [src]="weatherIcon" alt="Weather Icon" class="weather-icon">
+              <span>{{ weatherDescription }}</span>
+            </div>
+          </div>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="weather-metrics">
+          <div class="metric-item" (click)="showTempDetails()">
+            <div class="metric-label">Temperature</div>
+            <ion-icon name="thermometer-outline"></ion-icon>
+            <span>{{ temp }}</span>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Pressure</div>
+            <ion-icon name="speedometer-outline"></ion-icon>
+            <span>{{ pres }}</span>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Humidity</div>
+            <ion-icon name="water-outline"></ion-icon>
+            <span>{{ humidity }}</span>
+          </div>
+        </div>
+          
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
