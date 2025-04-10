@@ -1,18 +1,18 @@
-<ion-content [fullscreen]="true">
-  <ion-header [translucent]="true">
-    <ion-toolbar color="primary">
-      <ion-title>PurpleWeather</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>PurpleWeather</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <div id="container">
+<ion-content [fullscreen]="true">
+  <div class="container">
     <ion-item class="search-bar">
       <ion-input 
-        [(ngModel)]="cityInput" 
-        placeholder="Search for a city..."
+        [(ngModel)]="cityInput"
+        placeholder="Enter city..."
         (keyup.enter)="getWeatherData()">
       </ion-input>
-      <ion-button fill="clear" slot="end" (click)="getWeatherData()">
+      <ion-button slot="end" fill="clear" (click)="getWeatherData()">
         <ion-icon name="search-outline"></ion-icon>
       </ion-button>
     </ion-item>
@@ -20,36 +20,56 @@
     <ion-card *ngIf="weatherData" class="weather-card">
       <ion-card-header>
         <ion-card-title>
-          <img 
-            [src]="'https://flagcdn.com/48x36/' + weatherData.sys.country.toLowerCase() + '.png'" 
+          <img
+            [src]="'https://flagsapi.com/' + weatherData.sys.country + '/flat/64.png'"
             class="country-flag"
             alt="Country Flag">
           {{ weatherData.name }}, {{ weatherData.sys.country }}
         </ion-card-title>
-        <ion-card-subtitle>
-          {{ weatherData.weather[0].description | titlecase }}
-        </ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-list lines="none">
-          <ion-item (click)="showTempDetails()" class="clickable-item">
-            <ion-icon name="thermometer-outline" slot="start"></ion-icon>
-            <ion-label>{{ weatherData.main.temp | number:'1.0-0' }}°C</ion-label>
-          </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" class="temperature">
+              {{ weatherData.main.temp | number:'1.0-0' }}°C
+            </ion-col>
+          </ion-row>
 
-          <ion-item>
-            <ion-icon name="water-outline" slot="start"></ion-icon>
-            <ion-label>{{ weatherData.main.humidity }}% Humidity</ion-label>
-          </ion-item>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-icon name="thermometer-outline" slot="start"></ion-icon>
+                <ion-label>{{ weatherData.main.feels_like | number:'1.0-0' }}°C</ion-label>
+              </ion-item>
+            </ion-col>
+            
+            <ion-col size="6">
+              <ion-item>
+                <ion-icon name="water-outline" slot="start"></ion-icon>
+                <ion-label>{{ weatherData.main.humidity }}%</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-          <ion-item class="weather-icon-item">
-            <ion-img 
-              [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'"
-              class="weather-icon">
-            </ion-img>
-          </ion-item>
-        </ion-list>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-icon name="construct-outline" slot="start"></ion-icon>
+                <ion-label>{{ weatherData.main.pressure }} hPa</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-img 
+                [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@4x.png'"
+                class="weather-icon">
+              </ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
   </div>

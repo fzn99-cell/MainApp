@@ -1,17 +1,17 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { WeatherPage } from './weather/weather.page';
+import { HomePage } from './home/home.page';
 
-export const routes: Routes = [
-  {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
-  {
-    path: 'weather',
-    loadComponent: () => import('./weather/weather.page').then((m) => m.WeatherPage),
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
+const routes: Routes = [
+  { path: 'home', component: HomePage },
+  { path: 'weather', component: WeatherPage },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
+
