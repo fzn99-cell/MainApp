@@ -8,51 +8,48 @@
   <div id="container">
     <ion-item class="search-bar">
       <ion-input 
-        [(ngModel)]="city" 
+        [(ngModel)]="cityInput" 
         placeholder="Search for a city..."
         (keyup.enter)="getWeatherData()">
       </ion-input>
-      <ion-icon 
-        name="search-outline" 
-        slot="end" 
-        (click)="getWeatherData()" 
-        class="search-icon">
-      </ion-icon>
+      <ion-button fill="clear" slot="end" (click)="getWeatherData()">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
     </ion-item>
 
     <ion-card *ngIf="weatherData" class="weather-card">
       <ion-card-header>
-        <div class="location-header">
-          <img [src]="flagUrl" alt="Country Flag" class="flag-icon">
-          <div class="city-info">
-            <h2>{{ city | titlecase }}</h2>
-            <div class="weather-status">
-              <img [src]="weatherIcon" alt="Weather Icon" class="weather-icon">
-              <span>{{ weatherDescription }}</span>
-            </div>
-          </div>
-        </div>
+        <ion-card-title>
+          <img 
+            [src]="'https://flagcdn.com/48x36/' + weatherData.sys.country.toLowerCase() + '.png'" 
+            class="country-flag"
+            alt="Country Flag">
+          {{ weatherData.name }}, {{ weatherData.sys.country }}
+        </ion-card-title>
+        <ion-card-subtitle>
+          {{ weatherData.weather[0].description | titlecase }}
+        </ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
-        <div class="weather-metrics">
-          <div class="metric-item" (click)="showTempDetails()">
-            <div class="metric-label">Temperature</div>
-            <ion-icon name="thermometer-outline"></ion-icon>
-            <span>{{ temp }}</span>
-          </div>
-          <div class="metric-item">
-            <div class="metric-label">Pressure</div>
-            <ion-icon name="speedometer-outline"></ion-icon>
-            <span>{{ pres }}</span>
-          </div>
-          <div class="metric-item">
-            <div class="metric-label">Humidity</div>
-            <ion-icon name="water-outline"></ion-icon>
-            <span>{{ humidity }}</span>
-          </div>
-        </div>
-          
+        <ion-list lines="none">
+          <ion-item (click)="showTempDetails()" class="clickable-item">
+            <ion-icon name="thermometer-outline" slot="start"></ion-icon>
+            <ion-label>{{ weatherData.main.temp | number:'1.0-0' }}°C</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="water-outline" slot="start"></ion-icon>
+            <ion-label>{{ weatherData.main.humidity }}% Humidity</ion-label>
+          </ion-item>
+
+          <ion-item class="weather-icon-item">
+            <ion-img 
+              [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'"
+              class="weather-icon">
+            </ion-img>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
   </div>

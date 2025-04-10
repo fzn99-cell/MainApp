@@ -1,72 +1,53 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar class="transparent-toolbar">
-    <ion-title>
-      <div class="title-container">
-        <ion-icon name="camera"></ion-icon>
-        <span>Purple Camera</span>
-      </div>
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="clearAllPhotos()" class="clear-button">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Camera</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
-  <div class="camera-container">
-    <div class="camera-preview" *ngIf="!isLoading && photos.length === 0 && !errorMessage">
-      <div class="preview-placeholder">
-        <ion-icon name="camera-outline" size="large"></ion-icon>
-      </div>
-    </div>
-    
-    <div class="shutter-container">
-      <ion-button (click)="captureImage()" [disabled]="isLoading" class="shutter-button" shape="circle">
-        <ion-icon name="camera-outline" size="large"></ion-icon>
+  <div class="content">
+    <!-- Capture Button -->
+    <div class="capture-button-container">
+      <ion-button (click)="captureImage()" [disabled]="isLoading">
+        <ion-icon name="camera" slot="icon-only"></ion-icon>
       </ion-button>
     </div>
-    
+
+    <!-- Loading State -->
     <div *ngIf="isLoading" class="loading-container">
-      <ion-spinner name="circles" color="primary"></ion-spinner>
-      <p>Capturing moment...</p>
+      <ion-spinner name="crescent"></ion-spinner>
     </div>
-    
-    <ion-item *ngIf="errorMessage" class="error-message" lines="none">
-      <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
-      <ion-label>{{ errorMessage }}</ion-label>
-      <ion-button slot="end" fill="clear" (click)="dismissError()">
-        <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </div>
-  
-  <div class="gallery-section" *ngIf="photos.length > 0">
-    <div class="gallery-header">
-      <h3>Gallery</h3>
-      <ion-button fill="clear" size="small" (click)="clearAllPhotos()">
-        Clear All
-      </ion-button>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-container">
+      <ion-item color="danger" (click)="dismissError()">
+        <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+        <ion-label>{{ errorMessage }}</ion-label>
+      </ion-item>
     </div>
-    
-    <ion-grid>
+
+    <!-- Photo Gallery -->
+    <ion-grid *ngIf="photos.length > 0">
       <ion-row>
-        <ion-col size="6" size-md="4" *ngFor="let photo of photos; let i = index">
-          <div class="photo-card" (click)="viewPhoto(photo)">
-            <img [src]="photo" alt="Captured photo {{i+1}}"/>
-            <div class="photo-overlay">
-              <ion-icon name="eye-outline"></ion-icon>
+        <ion-col 
+          size="6"
+          size-md="4"
+          size-lg="3" 
+          *ngFor="let photo of photos"
+        >
+          <div class="photo-container">
+            <img [src]="photo" alt="Captured photo" class="photo-preview">
+            <div class="photo-actions">
+              <ion-button fill="clear" (click)="viewPhoto(photo)">
+                <ion-icon name="eye-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" (click)="clearAllPhotos()">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
             </div>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-  
-  <div *ngIf="!isLoading && photos.length === 0 && !errorMessage" class="empty-state">
-    <ion-icon name="images-outline" size="large"></ion-icon>
-    <p>No photos yet</p>
-    <p class="subtitle">Tap the camera button to capture a moment</p>
   </div>
 </ion-content>

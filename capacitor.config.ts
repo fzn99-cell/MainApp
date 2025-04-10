@@ -1,9 +1,17 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'MainApp',
-  webDir: 'www'
+  appId: 'io.ionic.purplecamera',
+  appName: 'Purple Camera',
+  webDir: 'www',
+  server: {
+    androidScheme: 'https'
+  },
+  plugins: {
+    Camera: {
+      promptBeforeEnablingPermission: true
+    }
+  }
 };
 
 export default config;

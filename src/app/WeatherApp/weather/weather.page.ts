@@ -3,18 +3,23 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AlertController, IonicModule, LoadingController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs'; 
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.page.html',
   styleUrls: ['./weather.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, HttpClientModule]
+  imports: [
+    IonicModule, 
+    CommonModule, 
+    FormsModule, 
+    HttpClientModule
+  ]
 })
 export class WeatherPage implements OnInit {
   apiKey = 'fc9026285c84b89165d175f606586a31'; 
-  country: string = '';
-  city: string = 'London'; 
+  cityInput: string = 'London'; 
   temp: string = '';
   pres: string = '';
   humidity: string = '';
@@ -25,7 +30,7 @@ export class WeatherPage implements OnInit {
   
   constructor(
     private http: HttpClient,
-    private alertController: AlertController,
+    private alertController: AlertController, 
     private loadingController: LoadingController
   ) {}
 
@@ -34,34 +39,20 @@ export class WeatherPage implements OnInit {
   }
 
   async getWeatherData() {
-    const loading = await this.loadingController.create({
-      message: 'Fetching weather data...',
-      spinner: 'crescent',
-      cssClass: 'custom-loading'
-    });
-    await loading.present();
-    
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric`;
-    
-    this.http.get(url).subscribe({
-      next: (data: any) => {
-        this.weatherData = data;
-        this.temp = `${Math.round(data.main.temp)}°C`;
-        this.pres = `${data.main.pressure} hPa`;
-        this.humidity = `${data.main.humidity}%`;
-        
-        this.weatherDescription = data.weather[0].description;
-        
-        this.flagUrl = `https://flagcdn.com/w80/${data.sys.country.toLowerCase()}.png`;
-        this.weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-        
-        loading.dismiss();
-      },
-      error: (error) => {
-        loading.dismiss();
-        this.presentErrorAlert();
-      }
-    });
+    if (!this.cityInput.trim()) return;
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.cityInput}&appid=${this.apiKey}&units=metric`;
+
+    try {
+      this.weatherData = await firstValueFrom(this.http.get(url));
+    } catch (error) {
+      const alert = await this.alertController.create({ 
+        header: 'Error',
+        message: 'City not found. Try: Paris, Tokyo, New York',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
   }
 
   async showTempDetails() {
@@ -86,7 +77,6 @@ export class WeatherPage implements OnInit {
       `,
       buttons: ['Close']
     });
-
     await alert.present();
   }
   
@@ -97,7 +87,6 @@ export class WeatherPage implements OnInit {
       buttons: ['OK'],
       cssClass: 'error-alert'
     });
-
     await alert.present();
   }
 }

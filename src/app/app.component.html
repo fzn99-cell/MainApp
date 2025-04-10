@@ -1,3 +1,50 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay" class="purple-menu">
+      <ion-header>
+        <ion-toolbar color="purple">
+          <ion-title>App Suite</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content>
+        <ion-list class="menu-list">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item 
+              [routerDirection]="'root'" 
+              [routerLink]="[p.url]" 
+              lines="none" 
+              detail="false"
+              class="menu-item"
+              routerLinkActive="selected">
+              <ion-icon 
+                slot="start" 
+                [name]="p.icon"
+                class="menu-icon">
+              </ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+      
+      <ion-footer>
+        <ion-toolbar color="purple" class="footer-toolbar">
+          <ion-title size="small">© 2025 My App Suite</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+    
+    <div class="ion-page" id="main-content">
+      <ion-header>
+        <ion-toolbar color="purple">
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>My App Suite</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-router-outlet></ion-router-outlet>
+    </div>
+  </ion-split-pane>
 </ion-app>

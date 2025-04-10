@@ -6,12 +6,12 @@ export const routes: Routes = [
     loadChildren: () => import('./Calculator/app.routes').then(m => m.routes)
   },
   {
-    path: 'camera',
-    loadChildren: () => import('./Camera/app.routes').then(m => m.routes)
-  },
-  {
     path: 'weather',
     loadChildren: () => import('./WeatherApp/app.routes').then(m => m.routes)
+  },
+  {
+    path: 'camera',
+    loadChildren: () => import('./Camera/app.routes').then(m => m.routes)
   },
   {
     path: '',

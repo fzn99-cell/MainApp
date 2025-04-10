@@ -1,36 +1,38 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="purple">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>
       Calculator
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="purple-bg">
   <div id="container">
-    <ion-card>
+    <ion-card class="calculator-card">
       <ion-card-header>
-        <ion-card-title>CALCULATOR</ion-card-title>
+        <ion-card-title class="calculator-title">CALCULATOR</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <!-- Modified input fields -->
-        <ion-item>
+        <ion-item lines="full" class="input-item">
           <ion-label position="floating">First Number</ion-label>
           <ion-input [(ngModel)]="num1" inputmode="decimal" type="tel"></ion-input>
         </ion-item>
         
-        <ion-item>
+        <ion-item lines="full" class="input-item">
           <ion-label position="floating">Second Number</ion-label>
           <ion-input [(ngModel)]="num2" inputmode="decimal" type="tel"></ion-input>
         </ion-item>
         
         <div class="ion-padding">
           <div class="button-container"> 
-            <ion-button (click)="addition()" expand="block" color="success">+</ion-button>
-            <ion-button (click)="subtraction()" expand="block" color="warning">-</ion-button>
-            <ion-button (click)="multiplication()" expand="block" color="tertiary">×</ion-button>
-            <ion-button (click)="division()" expand="block" color="danger">÷</ion-button>
+            <ion-button (click)="addition()" expand="block" color="purple-light">+</ion-button>
+            <ion-button (click)="subtraction()" expand="block" color="purple-light">-</ion-button>
+            <ion-button (click)="multiplication()" expand="block" color="purple-light">×</ion-button>
+            <ion-button (click)="division()" expand="block" color="purple-light">÷</ion-button>
           </div>  
         </div>
         

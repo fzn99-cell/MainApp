@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, 
   IonButton, IonIcon, IonSpinner, IonItem, IonLabel, 
-  IonGrid, IonRow, IonCol, ActionSheetController, ToastController 
+  IonGrid, IonRow, IonCol, ActionSheetController, ToastController
 } from '@ionic/angular/standalone';
-import { Camera } from '@capacitor/camera';
 import { CameraService } from '../../services/camera.service';
 import { Subscription } from 'rxjs';
 import { addIcons } from 'ionicons';
@@ -33,11 +32,12 @@ export class CameraPage implements OnInit, OnDestroy {
   isLoading = false;
   errorMessage: string | null = null;
   private subscription = new Subscription();
-
+  
   constructor(
     private cameraService: CameraService,
     private actionSheetController: ActionSheetController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private zone: NgZone
   ) {
     addIcons({
       camera, cameraOutline, trashOutline, closeOutline, 
@@ -47,8 +47,10 @@ export class CameraPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.cameraService.getPhotos().subscribe(photos => {
-        this.photos = photos;
+      this.cameraService.photos$.subscribe(photos => {
+        this.zone.run(() => {
+          this.photos = photos;
+        });
       })
     );
   }
@@ -58,28 +60,26 @@ export class CameraPage implements OnInit, OnDestroy {
   }
 
   async captureImage(): Promise<void> {
-    this.isLoading = true;
-    this.errorMessage = null;
+    this.zone.run(() => {
+      this.isLoading = true;
+      this.errorMessage = null;
+    });
     
     try {
-      const hasPermission = await this.requestPermissions();
-      if (!hasPermission) {
-        this.errorMessage = 'Camera permission is required to take photos.';
-        this.isLoading = false;
-        return;
-      }
-      
       const photo = await this.cameraService.takePicture();
-      if (!photo) {
-        this.errorMessage = 'No image captured. Please try again.';
-      } else {
-        await this.showToast('Photo captured successfully!');
-      }
+      this.zone.run(async () => {
+        if (!photo) {
+          this.errorMessage = 'No image captured. Please try again.';
+        } else {
+          await this.showToast('Photo captured successfully!');
+        }
+        this.isLoading = false;
+      });
     } catch (error) {
-      this.errorMessage = 'Error capturing image. Please try again.';
-      console.error('Camera error:', error);
-    } finally {
-      this.isLoading = false;
+      this.zone.run(() => {
+        this.errorMessage = 'Error capturing image. Please try again.';
+        this.isLoading = false;
+      });
     }
   }
 
@@ -88,7 +88,6 @@ export class CameraPage implements OnInit, OnDestroy {
     
     const actionSheet = await this.actionSheetController.create({
       header: 'Clear all photos?',
-      cssClass: 'purple-action-sheet',
       buttons: [
         {
           text: 'Delete All',
@@ -109,41 +108,27 @@ export class CameraPage implements OnInit, OnDestroy {
     
     await actionSheet.present();
   }
-  
+
   async viewPhoto(photoUrl: string): Promise<void> {
-    console.log('Viewing photo:', photoUrl);
-    await this.showToast('Photo viewer will open here');
+    const toast = await this.toastController.create({
+      message: `Viewing photo: ${photoUrl}`,
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
   }
-  
+
   dismissError(): void {
     this.errorMessage = null;
   }
-  
+
   private async showToast(message: string): Promise<void> {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
       position: 'bottom',
-      color: 'primary',
-      cssClass: 'purple-toast'
+      color: 'primary'
     });
     await toast.present();
-  }
-
-  async requestPermissions(): Promise<boolean> {
-    try {
-      const permissionState = await Camera.checkPermissions();
-      
-      if (permissionState.camera !== 'granted') {
-        const requestResult = await Camera.requestPermissions();
-        return requestResult.camera === 'granted';
-      }
-      
-      return true;
-    } catch (error) {
-      console.error('Permission error:', error);
-      this.errorMessage = 'Camera permission is required to take photos.';
-      return false;
-    }
   }
 }

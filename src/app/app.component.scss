@@ -1,0 +1,90 @@
+:host {
+    --ion-color-purple: #8a2be2;
+    --ion-color-purple-rgb: 138, 43, 226;
+    --ion-color-purple-contrast: #ffffff;
+    --ion-color-purple-contrast-rgb: 255, 255, 255;
+    --ion-color-purple-shade: #7926c7;
+    --ion-color-purple-tint: #9640e5;
+  
+    --ion-color-purple-light: #aa66cc;
+    --ion-color-purple-light-rgb: 170, 102, 204;
+    --ion-color-purple-light-contrast: #ffffff;
+    --ion-color-purple-light-contrast-rgb: 255, 255, 255;
+    --ion-color-purple-light-shade: #955ab4;
+    --ion-color-purple-light-tint: #b375d1;
+  }
+  
+  :root {
+    --ion-color-purple: #8a2be2;
+    --ion-color-purple-rgb: 138, 43, 226;
+    --ion-color-purple-contrast: #ffffff;
+    --ion-color-purple-contrast-rgb: 255, 255, 255;
+    --ion-color-purple-shade: #7926c7;
+    --ion-color-purple-tint: #9640e5;
+  }
+  
+  .ion-color-purple {
+    --ion-color-base: var(--ion-color-purple);
+    --ion-color-base-rgb: var(--ion-color-purple-rgb);
+    --ion-color-contrast: var(--ion-color-purple-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-purple-contrast-rgb);
+    --ion-color-shade: var(--ion-color-purple-shade);
+    --ion-color-tint: var(--ion-color-purple-tint);
+  }
+  
+  .purple-menu {
+    --ion-background-color: #f8f4ff;
+    
+    ion-toolbar {
+      --background: var(--ion-color-purple);
+      --color: white;
+      --border-color: transparent;
+    }
+  }
+  
+  .menu-list {
+    background: transparent;
+    padding-top: 20px;
+  }
+  
+  .menu-item {
+    --background: transparent;
+    --background-hover: rgba(138, 43, 226, 0.08);
+    --background-activated: rgba(138, 43, 226, 0.15);
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin: 8px 16px;
+    font-weight: 500;
+    
+    &.selected {
+      --background: rgba(138, 43, 226, 0.15);
+      --color: var(--ion-color-purple);
+      font-weight: 600;
+      
+      .menu-icon {
+        color: var(--ion-color-purple);
+      }
+    }
+  }
+  
+  .menu-icon {
+    color: #555;
+    margin-right: 8px;
+  }
+  
+  .footer-toolbar {
+    --min-height: 40px;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.9;
+  }
+  
+  ion-header ion-toolbar {
+    --background: var(--ion-color-purple);
+    --color: white;
+  }
+  
+  ion-menu-button {
+    color: white;
+  }

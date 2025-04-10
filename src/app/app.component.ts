@@ -1,42 +1,32 @@
 import { Component } from '@angular/core';
-import { IonApp, IonMenu, IonRouterOutlet, IonContent, IonList, IonItem, IonIcon, IonLabel, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { 
+  IonApp, IonMenu, IonRouterOutlet, IonContent, IonList, IonItem, 
+  IonIcon, IonLabel, IonHeader, IonTitle, IonToolbar, IonSplitPane,
+  IonFooter, IonMenuToggle, IonButtons, IonMenuButton 
+} from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <ion-app>
-      <ion-menu contentId="main-content">
-        <ion-header>
-          <ion-toolbar color="primary">
-            <ion-title>App Suite</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <ion-list>
-            <ion-item button routerLink="/calculator">
-              <ion-icon name="calculator" slot="start"></ion-icon>
-              <ion-label>Calculator</ion-label>
-            </ion-item>
-            <ion-item button routerLink="/camera">
-              <ion-icon name="camera" slot="start"></ion-icon>
-              <ion-label>Camera</ion-label>
-            </ion-item>
-            <ion-item button routerLink="/weather">
-              <ion-icon name="cloudy-night" slot="start"></ion-icon>
-              <ion-label>Weather</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-content>
-      </ion-menu>
-      <ion-router-outlet id="main-content"></ion-router-outlet>
-    </ion-app>
-  `,
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     IonApp, IonMenu, IonRouterOutlet, IonContent,
     IonList, IonItem, IonIcon, IonLabel,
-    IonHeader, IonTitle, IonToolbar, RouterModule
+    IonHeader, IonTitle, IonToolbar, RouterModule,
+    IonSplitPane, IonFooter, IonMenuToggle, IonButtons,
+    IonMenuButton
   ]
 })
-export class AppComponent {}
+export class AppComponent {
+  public appPages = [
+    { title: 'Calculator', url: '/calculator', icon: 'calculator' },
+    { title: 'Weather', url: '/weather', icon: 'cloudy-night' },
+    { title: 'Camera', url: '/camera', icon: 'camera' }
+  ];
+  
+  constructor() {}
+}

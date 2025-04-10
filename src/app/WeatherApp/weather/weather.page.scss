@@ -216,3 +216,58 @@
   padding: 15px 15px; 
   min-width: 80px; 
 }
+
+ion-card {
+  background: rgba(255, 255, 255, 0.9);
+  margin: 16px;
+  
+  img {
+    width: 48px;
+    height: 36px;
+    margin-right: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  ion-icon {
+    color: var(--ion-color-primary);
+    font-size: 1.4em;
+  }
+  
+  ion-item {
+    --padding-start: 0;
+    --min-height: 50px;
+  }
+}
+
+#container {
+  padding: 16px;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.weather-card {
+  ion-card-header {
+    padding-bottom: 0;
+  }
+
+  .country-flag {
+    width: 48px;
+    height: 36px;
+    margin-right: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .weather-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+
+  .clickable-item {
+    cursor: pointer;
+  }
+}

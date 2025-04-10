@@ -1,48 +1,79 @@
-ion-card {
+:root {
+  --ion-color-purple: #8a2be2;
+  --ion-color-purple-rgb: 138, 43, 226;
+  --ion-color-purple-contrast: #ffffff;
+  --ion-color-purple-contrast-rgb: 255, 255, 255;
+  --ion-color-purple-shade: #7926c7;
+  --ion-color-purple-tint: #9640e5;
+
+  --ion-color-purple-light: #aa66cc;
+  --ion-color-purple-light-rgb: 170, 102, 204;
+  --ion-color-purple-light-contrast: #ffffff;
+  --ion-color-purple-light-contrast-rgb: 255, 255, 255;
+  --ion-color-purple-light-shade: #955ab4;
+  --ion-color-purple-light-tint: #b375d1;
+}
+
+.ion-color-purple-light {
+  --ion-color-base: var(--ion-color-purple-light);
+  --ion-color-base-rgb: var(--ion-color-purple-light-rgb);
+  --ion-color-contrast: var(--ion-color-purple-light-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-purple-light-contrast-rgb);
+  --ion-color-shade: var(--ion-color-purple-light-shade);
+  --ion-color-tint: var(--ion-color-purple-light-tint);
+}
+
+.purple-bg {
+  --background: #f8f4ff;
+  background: linear-gradient(135deg, #f8f4ff 0%, #f0e6ff 100%);
+}
+
+.calculator-card {
   max-width: 500px;
   margin: 0 auto;
   border-radius: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(138, 43, 226, 0.15);
+  background: white;
+  overflow: hidden;
 }
 
-ion-card-header {
-  text-align: center;
-  padding: 16px;
-}
-
-ion-card-title {
+.calculator-title {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 24px;
   letter-spacing: 1px;
+  color: var(--ion-color-purple);
+  text-align: center;
 }
 
-ion-item {
+ion-card-header {
+  background-color: rgba(138, 43, 226, 0.1);
+  padding: 20px;
+}
+
+.input-item {
   --padding-start: 16px;
   --padding-end: 16px;
   --padding-top: 8px;
   --padding-bottom: 8px;
-  margin-bottom: 12px;
-}
-
-ion-label {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-}
-
-ion-input {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  --padding-start: 8px;
-  --padding-end: 8px;
+  margin-bottom: 16px;
+  --border-color: rgba(138, 43, 226, 0.3);
+  --highlight-color-focused: var(--ion-color-purple);
+  --background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  
+  ion-label {
+    color: var(--ion-color-purple-shade);
+    font-weight: 500;
+  }
 }
 
 .button-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 ion-button {
@@ -50,7 +81,9 @@ ion-button {
   margin: 0;
   font-size: 24px;
   font-weight: bold;
-  height: 50px;
+  height: 54px;
+  --border-radius: 10px;
+  --box-shadow: 0 4px 8px rgba(138, 43, 226, 0.2);
   
   @media (min-width: 400px) {
     flex: 1 0 22%;
@@ -58,21 +91,23 @@ ion-button {
 }
 
 .result-container {
-  background-color: #f8f8f8;
-  border-radius: 8px;
-  padding: 16px;
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(170, 102, 204, 0.1) 100%);
+  border-radius: 12px;
+  padding: 18px;
   text-align: center;
   margin-top: 16px;
+  border: 1px solid rgba(138, 43, 226, 0.15);
 }
 
 .result-value {
   font-family: 'Roboto Mono', monospace;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 500;
+  color: var(--ion-color-purple);
 }
 
 #container {
-  padding: 16px;
+  padding: 20px;
   height: 100%;
   display: flex;
   align-items: center;
