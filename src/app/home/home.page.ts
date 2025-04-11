@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonList, 
   IonItem, IonLabel, IonIcon, IonCard, IonCardContent, 
-  IonCardHeader, IonCardTitle, IonCardSubtitle
+  IonCardHeader, IonCardTitle, IonCardSubtitle,
+  IonButtons, IonMenuButton  
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -13,35 +14,40 @@ import {
 } from 'ionicons/icons';
 
 @Component({
-  selector: 'app-main-menu',
+  selector: 'app-home',
   template: `
     <ion-header>
-      <ion-toolbar color="primary">
+      <ion-toolbar color="purple">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
         <ion-title>My App Suite</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content class="custom-bg">
+      <h1 class="custom-heading">Welcome to My App Suite</h1>
+      <p class="custom-text">Your all-in-one solution for productivity and utility apps</p>
+      
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Welcome to My App Suite</ion-card-title>
-          <ion-card-subtitle>Select an app to launch</ion-card-subtitle>
+          <ion-card-title>Select an app to launch</ion-card-title>
         </ion-card-header>
         
         <ion-card-content>
           <ion-list>
             <ion-item button (click)="navigateTo('calculator')">
-              <ion-icon slot="start" name="calculator-outline" color="primary"></ion-icon>
+              <ion-icon slot="start" name="calculator-outline" color="purple"></ion-icon>
               <ion-label>Calculator</ion-label>
             </ion-item>
             
             <ion-item button (click)="navigateTo('camera')">
-              <ion-icon slot="start" name="camera-outline" color="primary"></ion-icon>
+              <ion-icon slot="start" name="camera-outline" color="purple"></ion-icon>
               <ion-label>Camera</ion-label>
             </ion-item>
             
-            <ion-item button (click)="navigateTo('weather/home')">
-              <ion-icon slot="start" name="cloud-outline" color="primary"></ion-icon>
+            <ion-item button (click)="navigateTo('weather')">
+              <ion-icon slot="start" name="cloudy-night-outline" color="purple"></ion-icon>
               <ion-label>Weather App</ion-label>
             </ion-item>
           </ion-list>
@@ -49,12 +55,14 @@ import {
       </ion-card>
     </ion-content>
   `,
+  styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
     CommonModule, 
     IonHeader, IonToolbar, IonTitle, IonContent, 
     IonList, IonItem, IonLabel, IonIcon, IonCard, 
-    IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle
+    IonCardContent, IonCardHeader, IonCardTitle,
+    IonButtons, IonMenuButton
   ]
 })
 export class MainMenuPage {

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { MainMenuPage } from './home/home.page';
 
 export const routes: Routes = [
   {
@@ -14,8 +15,12 @@ export const routes: Routes = [
     loadChildren: () => import('./Camera/app.routes').then(m => m.routes)
   },
   {
+    path: 'main-menu',
+    component: MainMenuPage
+  },
+  {
     path: '',
-    redirectTo: 'calculator',
+    redirectTo: 'main-menu',
     pathMatch: 'full'
   }
 ];

@@ -1,4 +1,4 @@
-package io.ionic.purplecamera;
+package io.ionic.MyAppSuite;
 
 import com.getcapacitor.BridgeActivity;
 
